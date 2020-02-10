@@ -252,7 +252,7 @@ para usarlo programáticamente.
 
 ## Hacker edition
 
-Antes de empezar a resolver estos puntos es importante que allas terminado con lo
+Antes de empezar a resolver estos puntos es importante que hayas terminado con lo
 presentado anteriormente.
 
 - Puedes agregar la propiedad `line` a cada objeto `link` indicando en qué línea

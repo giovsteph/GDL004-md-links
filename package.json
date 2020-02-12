@@ -1,0 +1,24 @@
+{
+  "name": "gio-gdl004-md-links",
+  "version": "1.0.0",
+  "description": "Helps you find broken links in your markdown files",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giovsteph/GDL004-md-links.git"
+  },
+  "keywords": [
+    "link",
+    "broken",
+    "check"
+  ],
+  "author": "Giovanna Ponce",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/giovsteph/GDL004-md-links/issues"
+  },
+  "homepage": "https://github.com/giovsteph/GDL004-md-links#readme"
+}

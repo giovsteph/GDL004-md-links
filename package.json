@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/giovsteph/GDL004-md-links/issues"
   },
-  "homepage": "https://github.com/giovsteph/GDL004-md-links#readme"
+  "homepage": "https://github.com/giovsteph/GDL004-md-links#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  }
 }

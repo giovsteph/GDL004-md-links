@@ -17,19 +17,17 @@
 
 const http = require('http');
 
-// const server = http.createServer((req, res) => {
-//     //res is the response
-//     const code = res.statusCode
-//         // res.end('the response is: ' + code)
-//     console.log(code)
-// }).listen('3000');
+let options = { method: 'HEAD', host: 'github.com', port: 80, path: '/' };
 
-//aqui en vez de 3000 debe ir el link que debe listenear
-//TO:DO Research, how to stop listening!, research, como hacer que abra la ventana para probarlo por sí mismo
+//its working if you don't add a slash, once you add something after .com, it always returns error
 
-
-let options = { host: 'google.com' }
-const req = http.request(options, function(r) {
-    console.log(JSON.stringify(r.statusCode));
+const req = http.request(options, function(req) {
+    if (req.statusCode) {
+        console.log('its ok')
+    }
 });
+req.on('error', function(err) {
+    //Handle error
+    console.log('404 not found');
+})
 req.end();

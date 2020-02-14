@@ -1,29 +1,31 @@
-// const path = require('path');
+const path = require('path');
 
-// let pathExt = path.extname('filename.md')
-//     //this should be the input of the filename in the console!! you can check the extension
-// console.log(pathExt);
+const pathExt = path.extname(process.argv[2])
+    //this should be the input of the filename in the console!! you can check the extension
+console.log(pathExt);
 
-// const checkFilePath = () => {
-//     if (pathExt == '.md') {
-//         console.log('it will proceed because its an md file')
-//     } else {
-//         console.log('file not recognized');
-//     }
-// };
+const checkFilePath = () => {
+    if (pathExt == '.md') {
+        console.log('it will proceed because its an md file')
+    } else {
+        console.log('file not recognized');
+    }
+};
 
-// checkFilePath()
+checkFilePath()
 
 
 const http = require('http');
 
-let options = { method: 'HEAD', host: 'github.com', port: 80, path: '/' };
-
 //its working if you don't add a slash, once you add something after .com, it always returns error
+//host option should be links found in document
+
+
+let options = { method: 'HEAD', host: process.argv[3], port: 80, path: '/' };
 
 const req = http.request(options, function(req) {
-    if (req.statusCode) {
-        console.log('its ok')
+    if (req.statusCode == 200 || 301 || 302 || 307 || 308) {
+        console.log('Link is working')
     }
 });
 req.on('error', function(err) {

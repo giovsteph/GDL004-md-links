@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 //const fetch = require('node-fetch');
-const http = require('http');
+const https = require('https');
 
 const inputPath = process.argv[2];
 const inputOptions = process.argv[3];
@@ -27,7 +27,7 @@ const parseFile = (inputPath) => {
             const regex = new RegExp(/(https?:\/\/[^\s\){0}]+)/g);
             const links = data.match(regex);
             if (links) {
-                //function to validate
+                //function to validate, pass the links as parameter
                 validateLinks(links);
             } else {
                 console.log('no links found');
@@ -48,26 +48,26 @@ const validateLinks = (links) => {
     console.log(links);
 
     for (let i = 0; i < links.length; i++) {
+        const res = https.get(links[i], res => {
+            let responses = [];
+            let completedrequests = 0;
+            let urls = [];
 
-        const req = http.get(links, (res) => {
-            //http://www.google.com
-            const statusCode = res.statusCode;
-            console.log(statusCode);
+            responses.push(res.statusCode);
+            urls.push(links[i])
+            completedrequests++;
 
-            //TO-DO: RESEARCH ALL OK STATUS CODES
-            if (statusCode == 200) {
-                console.log('its working!!');
-            } else {
-                console.log('404!!!')
-            }
+            console.log(urls, responses);
+
+
         });
-
-        req.on('error', e => {
+        res.on('error', e => {
             console.log('error!!')
-        })
+        });
     };
-};
 
+
+};
 
 
 

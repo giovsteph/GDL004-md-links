@@ -1,35 +1,76 @@
 const path = require('path');
+const fs = require('fs');
+//const fetch = require('node-fetch');
+const http = require('http');
 
-const pathExt = path.extname(process.argv[2])
-    //this should be the input of the filename in the console!! you can check the extension
-console.log(pathExt);
+const inputPath = process.argv[2];
+const inputOptions = process.argv[3];
 
+/***************FUNCION PARA VERIFICAR PATH DEL ARCHIVO, IT SHOULD BE A MD FILE************/
 const checkFilePath = () => {
+    let pathExt = path.extname(inputPath);
     if (pathExt == '.md') {
-        console.log('it will proceed because its an md file')
+        console.log('md file')
+        parseFile(inputPath);
     } else {
         console.log('file not recognized');
     }
 };
 
-checkFilePath()
 
 
-const http = require('http');
+/**************FUNCION PARA PARSEAR ARCHIVO SI SÍ ES .MD FILE i'tll only pass here if its a md file***********/
 
-//its working if you don't add a slash, once you add something after .com, it always returns error
-//host option should be links found in document
+const parseFile = (inputPath) => {
+    fs.readFile(inputPath, 'utf8', (err, data) => {
+        if (!err) {
+            const regex = new RegExp(/(https?:\/\/[^\s\){0}]+)/g);
+            const links = data.match(regex);
+            if (links) {
+                //function to validate
+                validateLinks(links);
+            } else {
+                console.log('no links found');
+            }
+        } else {
+            //error reading files
+            console.log('an error ocurred');
+            console.error(error.message);
+        }
+    });
+};
+
+/*************FUNCIÓN PARA VERIFICAR QUE LINKS ESTÉN FUNCIONANDO********/
+
+const validateLinks = (links) => {
+    console.log('hello, validating links');
+    console.log('this are the links: ');
+    console.log(links);
+
+    for (let i = 0; i < links.length; i++) {
+
+        const req = http.get(links, (res) => {
+            //http://www.google.com
+            const statusCode = res.statusCode;
+            console.log(statusCode);
+
+            //TO-DO: RESEARCH ALL OK STATUS CODES
+            if (statusCode == 200) {
+                console.log('its working!!');
+            } else {
+                console.log('404!!!')
+            }
+        });
+
+        req.on('error', e => {
+            console.log('error!!')
+        })
+    };
+};
 
 
-let options = { method: 'HEAD', host: process.argv[3], port: 80, path: '/' };
 
-const req = http.request(options, function(req) {
-    if (req.statusCode == 200 || 301 || 302 || 307 || 308) {
-        console.log('Link is working')
-    }
-});
-req.on('error', function(err) {
-    //Handle error
-    console.log('404 not found');
-})
-req.end();
+
+
+//correr función inicial hasta el final - asyncronous js
+checkFilePath();

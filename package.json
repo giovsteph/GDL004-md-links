@@ -23,5 +23,8 @@
   "homepage": "https://github.com/giovsteph/GDL004-md-links#readme",
   "devDependencies": {
     "eslint": "^6.8.0"
+  },
+  "dependencies": {
+    "markdown-it": "^10.0.0"
   }
 }

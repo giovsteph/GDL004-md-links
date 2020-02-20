@@ -66,21 +66,19 @@ async function validateLinks(links) {
             }).then(() => {
                 if (inputOptions === '--validate') {
                     setTimeout(function() {
-                        console.table(notOkLinks);
-                        console.table(okLinks);
+                        console.log(notOkLinks);
+                        console.log(okLinks);
                     }, 2800);
                 } else if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
                     setTimeout(function() {
-                        console.table('Total: ' + links.length + '\n' + 'Unique: ' + okLinksCount);
-                        console.table('Broken: ' + notOkLinksCount);
-                        console.table(notOkLinks);
-                        console.table(okLinks);
+                        console.log('Total: ' + links.length + '\n' + 'Unique: ' + okLinksCount);
+                        console.log('Broken: ' + notOkLinksCount);
+                        console.log(notOkLinks);
+                        console.log(okLinks);
                     }, 2800);
                 } else if (inputOptions === '--stats') {
                     setTimeout(function() {
-                        console.group('Stats Links ');
-                        console.table('Total: ' + links.length + '\n' + 'Unique: ' + okLinksCount);
-                        console.groupEnd('Valid Links');
+                        console.log('Total: ' + links.length + '\n' + 'Unique: ' + okLinksCount);
                     }, 2800);
                 }
             }).catch((error) => {
@@ -88,53 +86,6 @@ async function validateLinks(links) {
             });
     }
 }
-
-
-
-
-/************************************************PROMISE ATTEMPT***************************************************/
-// const validateLinks = (links) => {
-
-//     let promise = new Promise((resolve, reject) => {
-//         console.log(links);
-
-//         for (let i = 0; i < links.length; i++) {
-//             fetch(links[i])
-
-//             if (res.status >= 400) {
-//                 resolve(
-//                     notOkLinksCount++);
-//                 notOkLinks.push(links[i] + ' FAIL: ' + res.status);
-//             } else if (res.status === 1) {
-//                 reject('failed')
-//             } else {
-//                 resolve(
-//                     okLinksCount++)
-//                 okLinks.push(links[i] + ' OK: ' + res.status);
-
-//             }
-//         }
-
-//     })
-
-//     promise.then((notOkLinks, okLinks) => {
-//         //        if (inputOptions === '--validate') {
-//         console.log('wrong ' + notOkLinks);
-//         console.log(okLinks);
-//         // } else if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
-//         //     console.log('Total: ' + links.length + '\n' + 'Unique: ' + okLinksCount);
-//         //     console.log('Broken: ' + notOkLinksCount);
-//         //     console.log(notOkLinks);
-//         //     console.log(okLinks);
-//         // } else if (inputOptions === '--stats') {
-//         //     console.log('Total: ' + links.length + '\n' + 'Unique: ' + okLinksCount);
-//         //      }
-//     }).catch((error) => {
-//         console.error('Error');
-//     });
-// }
-
-
 
 
 

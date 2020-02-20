@@ -8,10 +8,10 @@ const inputPath = process.argv[2];
 const inputOptions = process.argv[3];
 const inputOptionsTwo = process.argv[4];
 
-let validLinks = [];
-let validLinksCount = 0;
-let wrongLinks = [];
-let wrongLinksCount = 0;
+let okLinks = [];
+let okLinksCount = 0;
+let notOkLinks = [];
+let notOkLinksCount = 0;
 
 
 /***************FUNCION PARA VERIFICAR PATH DEL ARCHIVO, IT SHOULD BE A MD FILE************/
@@ -50,43 +50,89 @@ const parseFile = (inputPath) => {
 
 /*************FUNCIÓN PARA VERIFICAR QUE LINKS ESTÉN FUNCIONANDO********/
 
-const validateLinks = (links) => {
-    let promise = new Promise((resolve, reject) => {
+async function validateLinks(links) {
+    for (let i = 0; i < links.length; i++) {
+        fetch(links[i])
+            .then(res => {
+                if (res.status >= 400) {
 
-        for (let i = 0; i < links.length; i++) {
-            fetch(links[i])
-        }
-        if (res.status >= 400) {
-            resolve(
-                wrongLinksCount++);
-            // console.log(wrongLinksCount+ " Wrong Link : "+ res.status  + links[i] );
-            wrongLinks.push(links[i] + ' FAIL: ' + res.status);
-        } else if (res.status == 1) {
-            reject('failed')
-        } else {
-            resolve(
-                    validLinksCount++)
-                // console.log(res.status + " Successful match " + links[i] +validLinksCount);
-            validLinks.push(links[i] + ' OK: ' + res.status);
+                    notOkLinksCount++;
+                    notOkLinks.push(links[i] + ' FAIL : ' + res.status);
+                } else {
+                    okLinks.push(links[i] + ' OK : ' + res.status);
+                    return okLinksCount++;
+                }
 
-        }
-
-    }).then((wrongLinks, validLinks) => {
-        // if (inputOptions === '--validate') {
-        console.log('wrong ' + wrongLinks);
-        console.log(validLinks);
-        // } else if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
-        //     console.log('Total: ' + links.length + '\n' + 'Unique: ' + validLinksCount);
-        //     console.log('Broken: ' + wrongLinksCount);
-        //     console.log(wrongLinks);
-        //     console.log(validLinks);
-        // } else if (inputOptions === '--stats') {
-        //     console.log('Total: ' + links.length + '\n' + 'Unique: ' + validLinksCount);
-        // }
-    }).catch((error) => {
-        console.error('Error');
-    });
+            }).then(() => {
+                if (inputOptions === '--validate') {
+                    setTimeout(function() {
+                        console.table(notOkLinks);
+                        console.table(okLinks);
+                    }, 2800);
+                } else if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
+                    setTimeout(function() {
+                        console.table('Total: ' + links.length + '\n' + 'Unique: ' + okLinksCount);
+                        console.table('Broken: ' + notOkLinksCount);
+                        console.table(notOkLinks);
+                        console.table(okLinks);
+                    }, 2800);
+                } else if (inputOptions === '--stats') {
+                    setTimeout(function() {
+                        console.group('Stats Links ');
+                        console.table('Total: ' + links.length + '\n' + 'Unique: ' + okLinksCount);
+                        console.groupEnd('Valid Links');
+                    }, 2800);
+                }
+            }).catch((error) => {
+                console.error('Error');
+            });
+    }
 }
+
+
+
+
+/************************************************PROMISE ATTEMPT***************************************************/
+// const validateLinks = (links) => {
+
+//     let promise = new Promise((resolve, reject) => {
+//         console.log(links);
+
+//         for (let i = 0; i < links.length; i++) {
+//             fetch(links[i])
+
+//             if (res.status >= 400) {
+//                 resolve(
+//                     notOkLinksCount++);
+//                 notOkLinks.push(links[i] + ' FAIL: ' + res.status);
+//             } else if (res.status === 1) {
+//                 reject('failed')
+//             } else {
+//                 resolve(
+//                     okLinksCount++)
+//                 okLinks.push(links[i] + ' OK: ' + res.status);
+
+//             }
+//         }
+
+//     })
+
+//     promise.then((notOkLinks, okLinks) => {
+//         //        if (inputOptions === '--validate') {
+//         console.log('wrong ' + notOkLinks);
+//         console.log(okLinks);
+//         // } else if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
+//         //     console.log('Total: ' + links.length + '\n' + 'Unique: ' + okLinksCount);
+//         //     console.log('Broken: ' + notOkLinksCount);
+//         //     console.log(notOkLinks);
+//         //     console.log(okLinks);
+//         // } else if (inputOptions === '--stats') {
+//         //     console.log('Total: ' + links.length + '\n' + 'Unique: ' + okLinksCount);
+//         //      }
+//     }).catch((error) => {
+//         console.error('Error');
+//     });
+// }
 
 
 

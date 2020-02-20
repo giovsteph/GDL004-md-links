@@ -1,10 +1,18 @@
 const path = require('path');
 const fs = require('fs');
-//const fetch = require('node-fetch');
+const fetch = require('node-fetch');
 const https = require('https');
+const http = require('http');
 
 const inputPath = process.argv[2];
 const inputOptions = process.argv[3];
+const inputOptionsTwo = process.argv[4];
+
+let validLinks = [];
+let validLinksCount = 0;
+let wrongLinks = [];
+let wrongLinksCount = 0;
+
 
 /***************FUNCION PARA VERIFICAR PATH DEL ARCHIVO, IT SHOULD BE A MD FILE************/
 const checkFilePath = () => {
@@ -43,31 +51,44 @@ const parseFile = (inputPath) => {
 /*************FUNCIÓN PARA VERIFICAR QUE LINKS ESTÉN FUNCIONANDO********/
 
 const validateLinks = (links) => {
-    console.log('hello, validating links');
-    console.log('this are the links: ');
-    console.log(links);
+    let promise = new Promise((resolve, reject) => {
 
-    for (let i = 0; i < links.length; i++) {
-        const res = https.get(links[i], res => {
-            let responses = [];
-            let completedrequests = 0;
-            let urls = [];
+        for (let i = 0; i < links.length; i++) {
+            fetch(links[i])
+        }
+        if (res.status >= 400) {
+            resolve(
+                wrongLinksCount++);
+            // console.log(wrongLinksCount+ " Wrong Link : "+ res.status  + links[i] );
+            wrongLinks.push(links[i] + ' FAIL: ' + res.status);
+        } else if (res.status == 1) {
+            reject('failed')
+        } else {
+            resolve(
+                    validLinksCount++)
+                // console.log(res.status + " Successful match " + links[i] +validLinksCount);
+            validLinks.push(links[i] + ' OK: ' + res.status);
 
-            responses.push(res.statusCode);
-            urls.push(links[i])
-            completedrequests++;
+        }
 
-            console.log(urls, responses);
+    }).then((wrongLinks, validLinks) => {
+        // if (inputOptions === '--validate') {
+        console.log('wrong ' + wrongLinks);
+        console.log(validLinks);
+        // } else if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
+        //     console.log('Total: ' + links.length + '\n' + 'Unique: ' + validLinksCount);
+        //     console.log('Broken: ' + wrongLinksCount);
+        //     console.log(wrongLinks);
+        //     console.log(validLinks);
+        // } else if (inputOptions === '--stats') {
+        //     console.log('Total: ' + links.length + '\n' + 'Unique: ' + validLinksCount);
+        // }
+    }).catch((error) => {
+        console.error('Error');
+    });
+}
 
 
-        });
-        res.on('error', e => {
-            console.log('error!!')
-        });
-    };
-
-
-};
 
 
 

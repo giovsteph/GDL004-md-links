@@ -191,9 +191,9 @@ Por ejemplo:
 
 ```sh
 $ md-links ./some/example.md
-./some/example.md http://algo.com/2/3/ Link a algo
+./some/example.md https://algo.com/2/3/ Link a algo
 ./some/example.md https://otra-cosa.net/algun-doc.html algún doc
-./some/example.md http://google.com/ Google
+./some/example.md https://google.com/ Google
 ```
 
 El comportamiento por defecto no debe validar si las URLs responden ok o no,
@@ -214,9 +214,9 @@ Por ejemplo:
 
 ```sh
 $ md-links ./some/example.md --validate
-./some/example.md http://algo.com/2/3/ ok 200 Link a algo
+./some/example.md https://algo.com/2/3/ ok 200 Link a algo
 ./some/example.md https://otra-cosa.net/algun-doc.html fail 404 algún doc
-./some/example.md http://google.com/ ok 301 Google
+./some/example.md https://google.com/ ok 301 Google
 ```
 
 Vemos que el _output_ en este caso incluye la palabra `ok` o `fail` después de
@@ -301,7 +301,7 @@ links podría plantearse de las siguientes maneras (todas válidas):
 - Usando un _custom renderer_ de [marked](https://github.com/markedjs/marked)
   (`new marked.Renderer()`).
 
-No dudes en consultar a tus compañeras, coaches y/o el [foro de la comunidad](http://community.laboratoria.la/c/js)
+No dudes en consultar a tus compañeras, coaches y/o el [foro de la comunidad](https://community.laboratoria.la/c/js)
 si tienes dudas existenciales con respecto a estas decisiones. No existe una
 "única" manera correcta :wink:
 
@@ -315,14 +315,14 @@ si tienes dudas existenciales con respecto a estas decisiones. No existe una
 
 - [Acerca de Node.js - Documentación oficial](https://nodejs.org/es/about/)
 - [Node.js file system - Documentación oficial](https://nodejs.org/api/fs.html)
-- [Node.js http.get - Documentación oficial](https://nodejs.org/api/http.html#http_http_get_options_callback)
+- [Node.js http.get - Documentación oficial](http://nodejs.org/api/http.html#http_http_get_options_callback)
 - [Node.js - Wikipedia](https://es.wikipedia.org/wiki/Node.js)
 - [What exactly is Node.js? - freeCodeCamp](https://medium.freecodecamp.org/what-exactly-is-node-js-ae36e97449f5)
 - [¿Qué es Node.js y para qué sirve? - drauta.com](https://www.drauta.com/que-es-nodejs-y-para-que-sirve)
 - [¿Qué es Nodejs? Javascript en el Servidor - Fazt en YouTube](https://www.youtube.com/watch?v=WgSc1nv_4Gw)
 - [¿Simplemente qué es Node.js? - IBM Developer Works, 2011](https://www.ibm.com/developerworks/ssa/opensource/library/os-nodejs/index.html)
 - [Node.js y npm](https://www.genbeta.com/desarrollo/node-js-y-npm)
-- [Módulos, librerías, paquetes, frameworks... ¿cuál es la diferencia?](http://community.laboratoria.la/t/modulos-librerias-paquetes-frameworks-cual-es-la-diferencia/175)
+- [Módulos, librerías, paquetes, frameworks... ¿cuál es la diferencia?](https://community.laboratoria.la/t/modulos-librerias-paquetes-frameworks-cual-es-la-diferencia/175)
 - [Asíncronía en js](https://carlosazaustre.com/manejando-la-asincronia-en-javascript/)
 - [NPM](https://docs.npmjs.com/getting-started/what-is-npm)
 - [Publicar packpage](https://docs.npmjs.com/getting-started/publishing-npm-packages)

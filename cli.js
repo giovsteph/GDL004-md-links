@@ -10,9 +10,11 @@ const fs = require('fs');
 const fetch = require('node-fetch');
 const chalk = require('chalk');
 
+
+
+
 const inputPath = process.argv[2];
-const inputOptions = process.argv[3];
-const inputOptionsTwo = process.argv[4];
+let inputOptions = process.argv.slice(3, process.argv.length);
 
 let okLinks = [];
 let okLinksCount = 0;
@@ -84,29 +86,22 @@ const validateLinks = (links, names) => {
     }
     Promise.all(promises).then(() => {
 
-        if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
-            console.group('\n' + 'Stats and Validate');
+        if (inputOptions.includes('--validate' && '--stats')) {
+            console.group('Stats');
             console.log(chalk.magenta('Total: ' + links.length));
             console.log(chalk.cyan('Unique: ' + links.length));
             console.log(chalk.green('Ok: ' + okLinksCount))
             console.log(chalk.red('Broken: ' + notOkLinksCount));
-            console.groupEnd('Stats and Validate');
-        } else if (inputOptions === '--validate' && inputOptionsTwo === '--stats') {
-            console.group('\n' + 'Stats and Validate');
-            console.log(chalk.magenta('Total: ' + links.length));
-            console.log(chalk.cyan('Unique: ' + links.length));
-            console.log(chalk.green('Ok: ' + okLinksCount))
-            console.log(chalk.red('Broken: ' + notOkLinksCount));
-            console.groupEnd('Stats and Validate');
-        } else if (inputOptions === '--validate') {
-            console.group('\n' + ' Broken Links');
+            console.groupEnd('Stats');
+        } else if (inputOptions.includes('--validate')) {
+            console.group('Broken Links');
             console.table(notOkLinks);
             console.groupEnd('Broken Links');
-            console.group('\n' + 'Valid Links');
+            console.group('Valid Links');
             console.table(okLinks);
             console.groupEnd('Valid Links');
-        } else if (inputOptions === '--stats') {
-            console.group('\n' + 'Stats');
+        } else if (inputOptions.includes('--stats')) {
+            console.group('Stats');
             console.log(chalk.magenta('Total: ' + links.length));
             console.log(chalk.cyan('Unique: ' + links.length));
             console.groupEnd('Stats');

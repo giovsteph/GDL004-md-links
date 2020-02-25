@@ -63,21 +63,39 @@ const validateLinks = (links) => {
     }
     Promise.all(promises).then(() => {
         if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
+            console.group('\n' + 'Stats');
             console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
             console.log('Broken: ' + notOkLinksCount);
-            console.log(notOkLinks);
-            console.log(okLinks);
+            console.groupEnd('Stats');
+            console.group('\n' + ' Broken Links');
+            console.table(notOkLinks);
+            console.groupEnd('Broken Links');
+            console.group('\n' + 'Valid Links');
+            console.table(okLinks);
+            console.groupEnd('Valid Links');
         } else if (inputOptions === '--validate' && inputOptionsTwo === '--stats') {
+            console.group('\n' + 'Stats ');
             console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
             console.log('Broken: ' + notOkLinksCount);
-            console.log(notOkLinks);
-            console.log(okLinks);
+            console.groupEnd('Stats');
+            console.group('\n' + ' Broken Links');
+            console.table(notOkLinks);
+            console.groupEnd('Broken Links');
+            console.group('\n' + 'Valid Links');
+            console.table(okLinks);
+            console.groupEnd('Valid Links');
         } else if (inputOptions === '--validate') {
-            console.log(notOkLinks);
-            console.log(okLinks);
+            console.group('\n' + ' Broken Links');
+            console.table(notOkLinks);
+            console.groupEnd('Broken Links');
+            console.group('\n' + 'Valid Links');
+            console.table(okLinks);
+            console.groupEnd('Valid Links');
         } else if (inputOptions === '--stats') {
-            console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
-            console.log('Broken: ' + notOkLinksCount);
+            console.group('\n' + 'Stats');
+            console.table('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
+            console.table('Broken: ' + notOkLinksCount);
+            console.groupEnd('Stats');
         }
 
 

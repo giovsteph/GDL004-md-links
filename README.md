@@ -280,7 +280,7 @@ así que lo instalamos directamente desde GitHub con el comando `npm install
 Laboratoria/course-parser`.
 
 ### Sugerencias de implementación
-
+- [PathWrong](https://nodejs.org/api/path1323.html)
 La implementación de este proyecto tiene varias partes: leer del sistema de
 archivos, recibir argumentos a través de la línea de comando, analizar texto,
 hacer consultas HTTP, ... y todas estas cosas pueden enfocarse de muchas formas,
@@ -319,10 +319,10 @@ si tienes dudas existenciales con respecto a estas decisiones. No existe una
 - [Node.js - Wikipedia](https://es.wikipedia.org/wiki/Node.js)
 - [What exactly is Node.js? - freeCodeCamp](https://medium.freecodecamp.org/what-exactly-is-node-js-ae36e97449f5)
 - [¿Qué es Node.js y para qué sirve? - drauta.com](https://www.drauta.com/que-es-nodejs-y-para-que-sirve)
-- [¿Qué es Nodejs? Javascript en el Servidor - Fazt en YouTube](https://www.youtube.com/watch?v=WgSc1nv_4Gw)
-- [¿Simplemente qué es Node.js? - IBM Developer Works, 2011](https://www.ibm.com/developerworks/ssa/opensource/library/os-nodejs/index.html)
+- [¿Qué es Nodejs? Javascript en el Servidor ](https://www.youtube.com/watch?v=WgSc1nv_4Gw)
+- [¿Simplemente qué es Node.js? ](https://www.ibm.com/developerworks/ssa/opensource/library/os-nodejs/index.html)
 - [Node.js y npm](https://www.genbeta.com/desarrollo/node-js-y-npm)
-- [Módulos, librerías, paquetes, frameworks... ¿cuál es la diferencia?](https://community.laboratoria.la/t/modulos-librerias-paquetes-frameworks-cual-es-la-diferencia/175)
+- [Módulos](https://community.laboratoria.la/t/modulos-librerias-paquetes-frameworks-cual-es-la-diferencia/175)
 - [Asíncronía en js](https://carlosazaustre.com/manejando-la-asincronia-en-javascript/)
 - [NPM](https://docs.npmjs.com/getting-started/what-is-npm)
 - [Publicar packpage](https://docs.npmjs.com/getting-started/publishing-npm-packages)

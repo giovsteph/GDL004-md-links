@@ -1,3 +1,7 @@
+#!/usr/bin/env node
+
+'use strict'
+
 const path = require('path');
 const fs = require('fs');
 const fetch = require('node-fetch');
@@ -26,11 +30,25 @@ const checkFilePath = () => {
 const parseFile = (inputPath) => {
     fs.readFile(inputPath, 'utf8', (err, data) => {
         if (!err) {
-            const regex = new RegExp(/(https?:\/\/[^\s\){0}]+)/g);
-            const links = data.match(regex);
+            const regex = new RegExp(/\[(.*)\]\((https?:\/\/[^\s\){0}]+)\)/g);
+
+            const getMatches = (data, regex, index) => {
+                index || (index = 1); // default to the first capturing group
+                let matches = [];
+                let match;
+                while (match = regex.exec(data)) {
+                    matches.push(match[index]);
+                }
+                return matches;
+            }
+
+            let links = getMatches(data, regex, 2);
+            let names = getMatches(data, regex, 1);
+
             if (links) {
+
                 //function to validate, pass the links as parameter
-                validateLinks(links);
+                validateLinks(links, names);
             } else {
                 console.log('no links found');
             }
@@ -43,47 +61,38 @@ const parseFile = (inputPath) => {
 };
 
 /*************FUNCIÓN PARA VERIFICAR QUE LINKS ESTÉN FUNCIONANDO********/
-const validateLinks = (links) => {
+const validateLinks = (links, names) => {
     let promises = [];
     for (let i = 0; i < links.length; i++) {
         promises.push(
             fetch(links[i]).then(res => {
                 if (res.status >= 400) {
                     notOkLinksCount++;
-                    notOkLinks.push(links[i] + ' FAIL : ' + res.status);
+                    notOkLinks.push(links[i] + ' FAIL : ' + res.status + ' ' + 'Name:' + ' ' + names[i]);
+
                 } else {
-                    okLinks.push(links[i] + ' OK : ' + res.status);
+                    okLinks.push(links[i] + ' OK : ' + res.status + ' ' + 'Name:' + ' ' + names[i]);
                     okLinksCount++;
                 }
             }).catch((error) => {
                 notOkLinksCount++;
-                notOkLinks.push(links[i] + ' FAIL TO FETCH LINK');
-            })
-        );
+                notOkLinks.push(links[i] + ' FAIL: FETCH LINK' + ' ' + 'Name:' + ' ' + names[i]);
+            }));
     }
     Promise.all(promises).then(() => {
+
         if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
-            console.group('\n' + 'Stats');
-            console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
+            console.group('\n' + 'Stats and Validate');
+            console.log('Total: ' + links.length);
+            console.log('Unique: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
             console.log('Broken: ' + notOkLinksCount);
-            console.groupEnd('Stats');
-            console.group('\n' + ' Broken Links');
-            console.table(notOkLinks);
-            console.groupEnd('Broken Links');
-            console.group('\n' + 'Valid Links');
-            console.table(okLinks);
-            console.groupEnd('Valid Links');
+            console.groupEnd('Stats and Validate');
         } else if (inputOptions === '--validate' && inputOptionsTwo === '--stats') {
-            console.group('\n' + 'Stats ');
-            console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
+            console.group('\n' + 'Stats and Validate ');
+            console.log('Total: ' + links.length);
+            console.log('Unique: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
             console.log('Broken: ' + notOkLinksCount);
-            console.groupEnd('Stats');
-            console.group('\n' + ' Broken Links');
-            console.table(notOkLinks);
-            console.groupEnd('Broken Links');
-            console.group('\n' + 'Valid Links');
-            console.table(okLinks);
-            console.groupEnd('Valid Links');
+            console.groupEnd('Stats and Validate');
         } else if (inputOptions === '--validate') {
             console.group('\n' + ' Broken Links');
             console.table(notOkLinks);
@@ -93,11 +102,10 @@ const validateLinks = (links) => {
             console.groupEnd('Valid Links');
         } else if (inputOptions === '--stats') {
             console.group('\n' + 'Stats');
-            console.table('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
-            console.table('Broken: ' + notOkLinksCount);
+            console.log('Total: ' + links.length);
+            console.log('Unique: ' + links.length);
             console.groupEnd('Stats');
         }
-
 
     });
 };

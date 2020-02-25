@@ -1,34 +1,44 @@
 {
-  "name": "gio-gdl004-md-links",
-  "version": "1.0.0",
-  "description": "Helps you find broken links in your markdown files",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/giovsteph/GDL004-md-links.git"
-  },
-  "keywords": [
-    "link",
-    "broken",
-    "check"
-  ],
-  "author": "Giovanna Ponce",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/giovsteph/GDL004-md-links/issues"
-  },
-  "homepage": "https://github.com/giovsteph/GDL004-md-links#readme",
-  "devDependencies": {
-    "eslint": "^6.8.0"
-  },
-  "dependencies": {
-    "async": "^3.1.1",
-    "bluebird": "^3.7.2",
-    "es6-promise": "^4.2.8",
-    "markdown-it": "^10.0.0",
-    "then": "0.0.1"
-  }
+    "name": "gio-gdl004-md-links",
+    "version": "1.0.0",
+    "description": "Helps you find broken links in your markdown files",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/giovsteph/GDL004-md-links.git"
+    },
+    "keywords": [
+        "link",
+        "broken",
+        "check"
+    ],
+    "author": "Giovanna Ponce",
+    "bin": {
+        "mdLinks-Giov": "./cli.js"
+    },
+    "engines": {
+        "node": ">=0.10.0"
+    },
+    "files": [
+        "app.js",
+        "cli.js"
+    ],
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/giovsteph/GDL004-md-links/issues"
+    },
+    "homepage": "https://github.com/giovsteph/GDL004-md-links#readme",
+    "devDependencies": {
+        "eslint": "^6.8.0"
+    },
+    "dependencies": {
+        "async": "^3.1.1",
+        "bluebird": "^3.7.2",
+        "es6-promise": "^4.2.8",
+        "markdown-it": "^10.0.0",
+        "then": "0.0.1"
+    }
 }

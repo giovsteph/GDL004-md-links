@@ -11,7 +11,6 @@ let okLinksCount = 0;
 let notOkLinks = [];
 let notOkLinksCount = 0;
 
-
 /***************FUNCION PARA VERIFICAR PATH DEL ARCHIVO, IT SHOULD BE A MD FILE************/
 const checkFilePath = () => {
     let pathExt = path.extname(inputPath);
@@ -23,10 +22,7 @@ const checkFilePath = () => {
     }
 };
 
-
-
 /**************FUNCION PARA PARSEAR ARCHIVO SI SÍ ES .MD FILE i'tll only pass here if its a md file***********/
-
 const parseFile = (inputPath) => {
     fs.readFile(inputPath, 'utf8', (err, data) => {
         if (!err) {
@@ -47,7 +43,6 @@ const parseFile = (inputPath) => {
 };
 
 /*************FUNCIÓN PARA VERIFICAR QUE LINKS ESTÉN FUNCIONANDO********/
-
 const validateLinks = (links) => {
     let promises = [];
     for (let i = 0; i < links.length; i++) {
@@ -60,15 +55,13 @@ const validateLinks = (links) => {
                     okLinks.push(links[i] + ' OK : ' + res.status);
                     okLinksCount++;
                 }
-
             }).catch((error) => {
-                console.error('error');
+                notOkLinksCount++;
+                notOkLinks.push(links[i] + ' FAIL TO FETCH LINK');
             })
         );
     }
-
     Promise.all(promises).then(() => {
-
         if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
             console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
             console.log('Broken: ' + notOkLinksCount);
@@ -91,6 +84,4 @@ const validateLinks = (links) => {
     });
 };
 
-
-//correr función inicial hasta el final - asyncronous js
 checkFilePath();

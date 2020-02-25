@@ -1,6 +1,6 @@
 {
     "name": "gio-md-links",
-    "version": "1.0.2",
+    "version": "1.0.1",
     "description": "Helps you find broken links in your markdown files",
     "main": "app.js",
     "scripts": {

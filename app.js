@@ -49,51 +49,47 @@ const parseFile = (inputPath) => {
 /*************FUNCIÓN PARA VERIFICAR QUE LINKS ESTÉN FUNCIONANDO********/
 
 const validateLinks = (links) => {
-
+    let promises = [];
     for (let i = 0; i < links.length; i++) {
-        const p = new Promise(resolve => {
+        promises.push(
+            fetch(links[i]).then(res => {
+                if (res.status >= 400) {
+                    notOkLinksCount++;
+                    notOkLinks.push(links[i] + ' FAIL : ' + res.status);
+                } else {
+                    okLinks.push(links[i] + ' OK : ' + res.status);
+                    okLinksCount++;
+                }
 
-            fetch(links[i])
-                .then(res => {
-
-                    if (res.status >= 400) {
-                        notOkLinksCount++;
-                        notOkLinks.push(links[i] + ' FAIL : ' + res.status);
-                    } else {
-                        okLinks.push(links[i] + ' OK : ' + res.status);
-                        okLinksCount++;
-
-                    }
-                    console.log('f');
-
-                    if (inputOptions === '--validate') {
-                        setTimeout(function() {
-                            console.log(notOkLinks);
-                            console.log(okLinks);
-                        }, 500);
-                    } else if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
-                        setTimeout(function() {
-                            console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
-                            console.log('Broken: ' + notOkLinksCount);
-                            console.log(notOkLinks);
-                            console.log(okLinks);
-                        }, 2800);
-                    } else if (inputOptions === '--stats') {
-                        setTimeout(function() {
-                            console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
-                        }, 2800);
-                    }
-                }).catch((error) => {
-                    console.error('Error');
-                });
-
-
-        })
+            }).catch((error) => {
+                console.error('error');
+            })
+        );
     }
 
-}
+    Promise.all(promises).then(() => {
+
+        if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
+            console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
+            console.log('Broken: ' + notOkLinksCount);
+            console.log(notOkLinks);
+            console.log(okLinks);
+        } else if (inputOptions === '--validate' && inputOptionsTwo === '--stats') {
+            console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
+            console.log('Broken: ' + notOkLinksCount);
+            console.log(notOkLinks);
+            console.log(okLinks);
+        } else if (inputOptions === '--validate') {
+            console.log(notOkLinks);
+            console.log(okLinks);
+        } else if (inputOptions === '--stats') {
+            console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
+            console.log('Broken: ' + notOkLinksCount);
+        }
 
 
+    });
+};
 
 
 //correr función inicial hasta el final - asyncronous js

@@ -1,8 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const fetch = require('node-fetch');
-const https = require('https');
-const http = require('http');
 
 const inputPath = process.argv[2];
 const inputOptions = process.argv[3];
@@ -50,41 +48,49 @@ const parseFile = (inputPath) => {
 
 /*************FUNCIÓN PARA VERIFICAR QUE LINKS ESTÉN FUNCIONANDO********/
 
-async function validateLinks(links) {
+const validateLinks = (links) => {
+
     for (let i = 0; i < links.length; i++) {
-        fetch(links[i])
-            .then(res => {
-                if (res.status >= 400) {
+        const p = new Promise(resolve => {
 
-                    notOkLinksCount++;
-                    notOkLinks.push(links[i] + ' FAIL : ' + res.status);
-                } else {
-                    okLinks.push(links[i] + ' OK : ' + res.status);
-                    return okLinksCount++;
-                }
+            fetch(links[i])
+                .then(res => {
 
-            }).then(() => {
-                if (inputOptions === '--validate') {
-                    setTimeout(function() {
-                        console.log(notOkLinks);
-                        console.log(okLinks);
-                    }, 2800);
-                } else if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
-                    setTimeout(function() {
-                        console.log('Total: ' + links.length + '\n' + 'Unique: ' + okLinksCount);
-                        console.log('Broken: ' + notOkLinksCount);
-                        console.log(notOkLinks);
-                        console.log(okLinks);
-                    }, 2800);
-                } else if (inputOptions === '--stats') {
-                    setTimeout(function() {
-                        console.log('Total: ' + links.length + '\n' + 'Unique: ' + okLinksCount);
-                    }, 2800);
-                }
-            }).catch((error) => {
-                console.error('Error');
-            });
+                    if (res.status >= 400) {
+                        notOkLinksCount++;
+                        notOkLinks.push(links[i] + ' FAIL : ' + res.status);
+                    } else {
+                        okLinks.push(links[i] + ' OK : ' + res.status);
+                        okLinksCount++;
+
+                    }
+                    console.log('f');
+
+                    if (inputOptions === '--validate') {
+                        setTimeout(function() {
+                            console.log(notOkLinks);
+                            console.log(okLinks);
+                        }, 500);
+                    } else if (inputOptions === '--stats' && inputOptionsTwo === '--validate') {
+                        setTimeout(function() {
+                            console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
+                            console.log('Broken: ' + notOkLinksCount);
+                            console.log(notOkLinks);
+                            console.log(okLinks);
+                        }, 2800);
+                    } else if (inputOptions === '--stats') {
+                        setTimeout(function() {
+                            console.log('Total: ' + links.length + '\n' + 'Ok: ' + okLinksCount);
+                        }, 2800);
+                    }
+                }).catch((error) => {
+                    console.error('Error');
+                });
+
+
+        })
     }
+
 }
 
 

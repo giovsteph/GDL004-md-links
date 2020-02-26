@@ -4,7 +4,7 @@
     "description": "Helps you find broken links in your markdown files",
     "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "jest"
     },
     "repository": {
         "type": "git",
@@ -32,7 +32,10 @@
     },
     "homepage": "https://github.com/giovsteph/GDL004-md-links#readme",
     "devDependencies": {
-        "eslint": "^6.8.0"
+        "cross-env": "^7.0.0",
+        "eslint": "^6.8.0",
+        "jest": "^25.1.0",
+        "supertest": "^4.0.2"
     },
     "dependencies": {
         "async": "^3.1.1",
@@ -40,5 +43,11 @@
         "es6-promise": "^4.2.8",
         "markdown-it": "^10.0.0",
         "then": "0.0.1"
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "coveragePathIgnorePatterns": [
+            "/node_modules/"
+        ]
     }
 }

@@ -21,6 +21,8 @@ let okLinksCount = 0;
 let notOkLinks = [];
 let notOkLinksCount = 0;
 
+
+
 /***************FUNCION PARA VERIFICAR PATH DEL ARCHIVO, IT SHOULD BE A MD FILE************/
 const checkFilePath = () => {
     let pathExt = path.extname(inputPath);
@@ -50,6 +52,7 @@ const parseFile = (inputPath) => {
             let links = getMatches(data, regex, 2);
             let names = getMatches(data, regex, 1);
 
+
             if (links) {
 
                 //function to validate, pass the links as parameter
@@ -73,7 +76,7 @@ const validateLinks = (links, names) => {
             fetch(links[i]).then(res => {
                 if (res.status >= 400) {
                     notOkLinksCount++;
-                    notOkLinks.push(links[i] + ' FAIL : ' + res.status + ' ' + 'Name:' + ' ' + names[i]);
+                    notOkLinks.push(inputPath + links[i] + ' FAIL : ' + res.status + ' ' + 'Name:' + ' ' + names[i]);
 
                 } else {
                     okLinks.push(links[i] + ' OK : ' + res.status + ' ' + 'Name:' + ' ' + names[i]);

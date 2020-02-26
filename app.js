@@ -45,6 +45,8 @@ module.exports = function mdLinks(inputPath, inputOptions = { validate: false })
                 let links = getMatches(data, regex, 2);
                 let names = getMatches(data, regex, 1);
 
+
+
                 if (links) {
 
                     //function to validate, pass the links as parameter
@@ -68,7 +70,7 @@ module.exports = function mdLinks(inputPath, inputOptions = { validate: false })
                 fetch(links[i]).then(res => {
                     if (res.status >= 400) {
                         notOkLinksCount++;
-                        notOkLinks.push(links[i] + ' FAIL : ' + res.status + ' ' + 'Name:' + ' ' + names[i]);
+                        notOkLinks.push(inputPath + links[i] + ' FAIL : ' + res.status + ' ' + 'Name:' + ' ' + names[i]);
 
                     } else {
                         okLinks.push(links[i] + ' OK : ' + res.status + ' ' + 'Name:' + ' ' + names[i]);
@@ -108,4 +110,10 @@ module.exports = function mdLinks(inputPath, inputOptions = { validate: false })
     };
 
     checkFilePath();
+}
+
+export {
+    checkFilePath,
+    parseFile,
+    validateLinks
 }

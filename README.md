@@ -12,3 +12,8 @@ Helps you find broken links in your markdown files
 	npm i gio-md-links
 
 ---
+
+## Flow Diagram
+
+
+![Diagram](https://ibb.co/4tbqP0Y)

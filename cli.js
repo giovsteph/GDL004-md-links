@@ -76,15 +76,15 @@ const validateLinks = (links, names) => {
             fetch(links[i]).then(res => {
                 if (res.status >= 400) {
                     notOkLinksCount++;
-                    notOkLinks.push(inputPath + links[i] + ' FAIL : ' + res.status + ' ' + 'Name:' + ' ' + names[i]);
+                    notOkLinks.push('File Name: ' + inputPath + ' ' + links[i] + ' FAIL : ' + res.status + ' ' + 'Name:' + ' ' + names[i]);
 
                 } else {
-                    okLinks.push(links[i] + ' OK : ' + res.status + ' ' + 'Name:' + ' ' + names[i]);
+                    okLinks.push('File Name: ' + inputPath + ' ' + links[i] + ' OK : ' + res.status + ' ' + 'Name:' + ' ' + names[i]);
                     okLinksCount++;
                 }
             }).catch((error) => {
                 notOkLinksCount++;
-                notOkLinks.push(links[i] + ' FAIL: FETCH LINK' + ' ' + 'Name:' + ' ' + names[i]);
+                notOkLinks.push('File Name: ' + inputPath + ' ' + links[i] + ' FAIL: FETCH LINK' + ' ' + 'Name:' + ' ' + names[i]);
             }));
     }
     Promise.all(promises).then(() => {
